@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+<!-- Header Section (You can include a header/navigation bar here) -->
+<header>
+    <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" width="36" height="32" alt="Brand image">
+                Sports Matchup
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html#discover-events">Discover Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="create_event.html">Create/Edit Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="my_events.html">My Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="login.html">Login/Sign up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- <h1 class="text-center m-3"> Profile</h1> -->
+</header>
+
+<!-- Main Content Section -->
+<main>
+    <section>
+        <div class="container text-center mt-4 bg-light text-bg-light py-2">
+            <h2>Profile Information</h2>
+            <div class="row">
+                <div class="col-3">
+                    <label for="file-input" class="profile-pic-btn">
+                        <img id="profile-picture" src="images/profile.png" alt="Profile Picture" class="img-fluid">
+                    </label>
+                    <input type="file" id="file-input" class="file-input">
+                </div>
+                <div class="col-9">
+                    <form id="form" class="mt-4">
+                        <!-- NAME -->
+                        <div class="form-group row mt-1">
+                            <label for="name" class="col-sm-2 col-form-label">Name:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                            </div>
+                        </div>
+
+                        <!-- AGE -->
+                        <div class="form-group row mt-1">
+                            <label for="age" class="col-sm-2 col-form-label">Age:</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="age" placeholder="Enter your age">
+                            </div>
+                        </div>
+
+                        <!-- SPORTS -->
+                        <div class="form-group row mt-1">
+                            <label for="sport_pref" class="col-sm-2 col-form-label">Sports Preferences:</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="sport_pref">
+                                    <option value="" selected disabled>Select Sports...</option>
+                                    <option>+ Add New Sport</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Modal for adding a new sport -->
+                        <div id="categoryModal" class="modal" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title">Add New Sport</h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label for="newCategory"></label>
+                                        <input type="text" class="form-control" id="newCategory" placeholder="New Category">
+                                        <button id="addCategory" class="btn btn-primary mt-2">Add Sport</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SKILL -->
+                        <div class="form-group row mt-1">
+                            <label for="skill" class="col-sm-2 col-form-label">Skill Level:</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="skill">
+                                    <option value="" selected disabled>Select Skill Level</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- LOCATION -->
+                        <div class="form-group row mt-1">
+                            <label for="location" class="col-sm-2 col-form-label">Location:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="location" placeholder="Enter your city">
+                            </div>
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div class="form-group row mt-1">
+                            <label for="email" class="col-sm-2 col-form-label">Email:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="email" placeholder="Enter your email">
+                            </div>
+                        </div>
+                        
+                        <!-- PHONE -->
+                        <div class="form-group row mt-1">
+                            <label for="phone" class="col-sm-2 col-form-label">Phone #:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="phone" placeholder="Enter your number">
+                            </div>
+                        </div>
+
+                        <!-- BUTTONS -->
+                        <div class="row mt-2">
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-danger">Sign Out</button>
+                            </div>
+                            <div class="col-sm-2">
+                                
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="reset" class="btn btn-secondary">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="d-flex flex-wrap justify-content-between align-items-center pt-1 mt-5 border-top position-static fixed-bottom">
+    <p class="col-md-4 mt-0 text-muted">© 2023 Sports Matchup</p>
+
+    <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+    </a>
+
+    <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link px-2 text-muted" aria-current="page" href="index.html#discover-events">Discover</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-2 text-muted" aria-current="page" href="create_event.html">Create/Edit</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-2 text-muted" aria-current="page" href="my_events.html">My Events</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-2 text-muted" aria-current="page" href="profile.html">Profile</a>
+        </li>
+    </ul>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
