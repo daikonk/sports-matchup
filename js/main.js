@@ -110,8 +110,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    
+
     // Initial display of all events
     displayEvents(allEvents);
+
+    var selectSport = document.getElementById("sport-participating");
+    var eventsFilter = document.getElementById('eventsFilter-participating');
+
+    var participatingEvents = [
+        { sport: "Football", name: "Football Game", skill:'Advanced', location: "Snapdragon Stadium", date: "11/05/2023" },
+        { sport: "Soccer", name: "Soccer Match", skill: 'Intermediate',location: "Allen Field", date: "11/22/2023" },
+        // Add more events here - will be updated with database values
+    ];
+
+    displayEvents(participatingEvents);
+
+    var eventsFilter = document.getElementById('eventsFilter-pending');
+
+    var pendingEvents = [
+        { sport: "Basketball", name: "Pickup Game", skill: 'Beginner', location: "San Diego Community Center", date: "12/05/2023" },
+        { sport: "Tennis", name: "Training Camp", skill: 'Beginner',location: "Del Cerro Tennis Club", date: "11/12/2023" },
+        { sport: "Basketball", name: "2v2 Pickup", skill: 'Intermediate',location: "Aztec Recreation Center", date: "11/02/2023" },
+        { sport: "Baseball", name: "Full 9 Inning Game", skill: 'Expert',location: "Petco Park", date: "12/01/2023" },
+        { sport: "Golf", name: "18 Hole 4 Person", skill: 'Advanced',location: "Torrey Pines Golf Course", date: "11/16/2023" }
+        // Add more events here - will be updated with database values
+    ];
+    
+    displayEvents(pendingEvents);
 
     // Event listener for sport selection change
     selectSport.addEventListener('change', function() {
