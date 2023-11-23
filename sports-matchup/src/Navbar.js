@@ -32,7 +32,7 @@ const Navbar = ({ logo, logoStyle }) => {
             </li>
             <li className="nav-item">
               <NavLink to="/create-edit-events" className="nav-link" activeClassName="active">
-                Create/Edit Events
+                Create Events
               </NavLink>
             </li>
             <li className="nav-item">

@@ -7,10 +7,10 @@ const Login = () => {
       }, []);
 
     return (
-        <main className="container mb-5">
-            <h1 className="text-center mb-5"> Login/Sign up</h1>
-            <div id="login-form">
-                <h2>Login</h2>
+        <main>
+            
+            <div id="login-form" className="container mt-5 bg-light bg-text-light">
+                <h1 className='text-center'>Login</h1>
                 <form id="login" method="POST">
                     <div className="mb-3">
                         <label for="email" className="form-label">Email:</label>

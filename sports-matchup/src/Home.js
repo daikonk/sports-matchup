@@ -36,10 +36,18 @@ const Home = () => {
                             <div className="col-sm-10">
                                 <select className="form-control" id="sport">
                                     <option value="" selected disabled>Select Sports...</option>
+                                    <option value="basketball">Basketball</option>
+                                    <option value="baseball">Baseball</option>
+                                    <option value="soccer">Soccer</option>
+                                    <option value="football">Football</option>
+                                    <option value="volleyball">Volleyball</option>
+                                    <option value="hockey">Hockey</option>
+                                    <option value="golf">Golf</option>
+                                    <option value="tennis">Tennis</option>
                                 </select>
                             </div>
                         </div>
-                        <div id="categoryModal" className="modal" tabindex="-1">
+                        {/* <div id="categoryModal" className="modal" tabindex="-1">
                             <div className="modal-dialog modal-dialog-centered">
                                 <div className="modal-content">
                                     <div className="modal-header">
@@ -53,7 +61,7 @@ const Home = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </form>
                     <h3 className="mt-4">Events in your Area:</h3>
                     <div id="eventsFilter" className="mt-3"></div>

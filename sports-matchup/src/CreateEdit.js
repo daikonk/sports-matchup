@@ -34,8 +34,8 @@ const CreateEdit = () => {
 
     return (
         <main>
-            <section>
-                <h1 className="text-center mb-5"> Create/Edit Events</h1>
+            <section className='bg-light bg-text-light'>
+                <h1 className="text-center mb-5"> Create Event</h1>
                 <div className="container mb-5">
                     <label for="eventName" className="form-label">Event Name</label>
                     <input type="text" className="form-control" id="eventName" placeholder="Enter the name of the event"/>
@@ -54,7 +54,18 @@ const CreateEdit = () => {
                         </div>
                         <div className="col-md-6">
                         <label for="inputSport4" className="form-label">Sport</label>
-                        <input type="sport" className="form-control" id="inputSport4"/>
+                        <select className="form-control" id="sport">
+                            <option value="" selected disabled>Select Sport...</option>
+                            <option value="basketball">Basketball</option>
+                            <option value="baseball">Baseball</option>
+                            <option value="soccer">Soccer</option>
+                            <option value="football">Football</option>
+                            <option value="volleyball">Volleyball</option>
+                            <option value="hockey">Hockey</option>
+                            <option value="golf">Golf</option>
+                            <option value="tennis">Tennis</option>
+                            <option value="add-sport">Other</option>
+                        </select>
                         </div>
                         <div className="col-md-6">
                         <label for="inputPhoneNumber4" className="form-label">Phone Number</label>
