@@ -1,10 +1,89 @@
 // CreateEdit.js
 import React, { useEffect, useState} from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const CreateEdit = () => {
+    const states = [
+        { name: 'Alabama', abbreviation: 'AL' },
+        { name: 'Alaska', abbreviation: 'AK' },
+        { name: 'Arizona', abbreviation: 'AZ' },
+        { name: 'Arkansas', abbreviation: 'AR' },
+        { name: 'California', abbreviation: 'CA' },
+        { name: 'Colorado', abbreviation: 'CO' },
+        { name: 'Connecticut', abbreviation: 'CT' },
+        { name: 'Delaware', abbreviation: 'DE' },
+        { name: 'Florida', abbreviation: 'FL' },
+        { name: 'Georgia', abbreviation: 'GA' },
+        { name: 'Hawaii', abbreviation: 'HI' },
+        { name: 'Idaho', abbreviation: 'ID' },
+        { name: 'Illinois', abbreviation: 'IL' },
+        { name: 'Indiana', abbreviation: 'IN' },
+        { name: 'Iowa', abbreviation: 'IA' },
+        { name: 'Kansas', abbreviation: 'KS' },
+        { name: 'Kentucky', abbreviation: 'KY' },
+        { name: 'Louisiana', abbreviation: 'LA' },
+        { name: 'Maine', abbreviation: 'ME' },
+        { name: 'Maryland', abbreviation: 'MD' },
+        { name: 'Massachusetts', abbreviation: 'MA' },
+        { name: 'Michigan', abbreviation: 'MI' },
+        { name: 'Minnesota', abbreviation: 'MN' },
+        { name: 'Mississippi', abbreviation: 'MS' },
+        { name: 'Missouri', abbreviation: 'MO' },
+        { name: 'Montana', abbreviation: 'MT' },
+        { name: 'Nebraska', abbreviation: 'NE' },
+        { name: 'Nevada', abbreviation: 'NV' },
+        { name: 'New Hampshire', abbreviation: 'NH' },
+        { name: 'New Jersey', abbreviation: 'NJ' },
+        { name: 'New Mexico', abbreviation: 'NM' },
+        { name: 'New York', abbreviation: 'NY' },
+        { name: 'North Carolina', abbreviation: 'NC' },
+        { name: 'North Dakota', abbreviation: 'ND' },
+        { name: 'Ohio', abbreviation: 'OH' },
+        { name: 'Oklahoma', abbreviation: 'OK' },
+        { name: 'Oregon', abbreviation: 'OR' },
+        { name: 'Pennsylvania', abbreviation: 'PA' },
+        { name: 'Rhode Island', abbreviation: 'RI' },
+        { name: 'South Carolina', abbreviation: 'SC' },
+        { name: 'South Dakota', abbreviation: 'SD' },
+        { name: 'Tennessee', abbreviation: 'TN' },
+        { name: 'Texas', abbreviation: 'TX' },
+        { name: 'Utah', abbreviation: 'UT' },
+        { name: 'Vermont', abbreviation: 'VT' },
+        { name: 'Virginia', abbreviation: 'VA' },
+        { name: 'Washington', abbreviation: 'WA' },
+        { name: 'West Virginia', abbreviation: 'WV' },
+        { name: 'Wisconsin', abbreviation: 'WI' },
+        { name: 'Wyoming', abbreviation: 'WY' }
+    ];
+
     const [expertiseLevel, setExpertiseLevel] = useState('Beginner');
     const [peopleCount, setPeopleCount] = useState(1);
     const [selectedState, setSelectedState] = useState('');
+    const [show, setShow] = useState(false);
+    const [newSport, setNewSport] = useState('');
+    const [selectedSport, setSelectedSport] = useState('');
+    const [sports, setSports] = useState(['Basketball', 'Baseball', 'Soccer', 'Football', 'Volleyball', 'Hockey', 'Golf', 'Tennis']);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const handleSportChange = (event) => {
+        if (event.target.value === 'add-sport') {
+            handleShow();
+        } else {
+            setSelectedSport(event.target.value);
+        }
+    };
+
+    const handleNewSportChange = (event) => {
+        setNewSport(event.target.value);
+    };
+
+    const handleSaveChanges = () => {
+        setSports([...sports, newSport]);
+        setSelectedSport(newSport.toLowerCase());
+        handleClose();
+    };
 
     const handleRangeChange = (event) => {
         const value = parseInt(event.target.value);
@@ -20,7 +99,7 @@ const CreateEdit = () => {
     };
 
     const handlePeopleCountChange = (event) => {
-        const newCount = Math.max(1, Math.min(10, Number(event.target.value)));
+        const newCount = Math.max(1, Math.min(25, Number(event.target.value)));
         setPeopleCount(newCount);
     };
 
@@ -35,7 +114,7 @@ const CreateEdit = () => {
     return (
         <main>
             <section className='bg-light bg-text-light'>
-                <h1 className="text-center mb-5"> Create Event</h1>
+                <h1 className="text-center mb-2"> Create Event</h1>
                 <div className="container mb-5">
                     <label for="eventName" className="form-label">Event Name</label>
                     <input type="text" className="form-control" id="eventName" placeholder="Enter the name of the event"/>
@@ -54,18 +133,30 @@ const CreateEdit = () => {
                         </div>
                         <div className="col-md-6">
                         <label for="inputSport4" className="form-label">Sport</label>
-                        <select className="form-control" id="sport">
-                            <option value="" selected disabled>Select Sport...</option>
-                            <option value="basketball">Basketball</option>
-                            <option value="baseball">Baseball</option>
-                            <option value="soccer">Soccer</option>
-                            <option value="football">Football</option>
-                            <option value="volleyball">Volleyball</option>
-                            <option value="hockey">Hockey</option>
-                            <option value="golf">Golf</option>
-                            <option value="tennis">Tennis</option>
-                            <option value="add-sport">Other</option>
+                        <select className="form-control" id="sport" value={selectedSport} onChange={handleSportChange}>
+                            <option value="" disabled>Select Sport...</option>
+                            {sports.map((sport, index) => (
+                                <option key={index} value={sport.toLowerCase()}>{sport}</option>
+                            ))}
+                            <option value="add-sport">Other...</option>
                         </select>
+
+                        <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Add a Sport</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <input type="text" className="form-control" placeholder="Enter sport name" onChange={handleNewSportChange} />
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Close
+                                </Button>
+                                <Button variant="primary" onClick={handleSaveChanges}>
+                                    Save Changes
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                         </div>
                         <div className="col-md-6">
                         <label for="inputPhoneNumber4" className="form-label">Phone Number</label>
@@ -90,57 +181,10 @@ const CreateEdit = () => {
                         <div className="col-md-4">
                             <label htmlFor="inputState" className="form-label">State</label>
                             <select id="inputState" className="form-select" value={selectedState} onChange={handleStateChange}>
-                                <option value="">Choose...</option>
-                                <option value="AL">Alabama</option>
-                                <option value="AK">Alaska</option>
-                                <option value="AZ">Arizona</option>
-                                <option value="AR">Arkansas</option>
-                                <option value="CA">California</option>
-                                <option value="CO">Colorado</option>
-                                <option value="CT">Connecticut</option>
-                                <option value="DE">Delaware</option>
-                                <option value="FL">Florida</option>
-                                <option value="GA">Georgia</option>
-                                <option value="HI">Hawaii</option>
-                                <option value="ID">Idaho</option>
-                                <option value="IL">Illinois</option>
-                                <option value="IN">Indiana</option>
-                                <option value="IA">Iowa</option>
-                                <option value="KS">Kansas</option>
-                                <option value="KY">Kentucky</option>
-                                <option value="LA">Louisiana</option>
-                                <option value="ME">Maine</option>
-                                <option value="MD">Maryland</option>
-                                <option value="MA">Massachusetts</option>
-                                <option value="MI">Michigan</option>
-                                <option value="MN">Minnesota</option>
-                                <option value="MS">Mississippi</option>
-                                <option value="MO">Missouri</option>
-                                <option value="MT">Montana</option>
-                                <option value="NE">Nebraska</option>
-                                <option value="NV">Nevada</option>
-                                <option value="NH">New Hampshire</option>
-                                <option value="NJ">New Jersey</option>
-                                <option value="NM">New Mexico</option>
-                                <option value="NY">New York</option>
-                                <option value="NC">North Carolina</option>
-                                <option value="ND">North Dakota</option>
-                                <option value="OH">Ohio</option>
-                                <option value="OK">Oklahoma</option>
-                                <option value="OR">Oregon</option>
-                                <option value="PA">Pennsylvania</option>
-                                <option value="RI">Rhode Island</option>
-                                <option value="SC">South Carolina</option>
-                                <option value="SD">South Dakota</option>
-                                <option value="TN">Tennessee</option>
-                                <option value="TX">Texas</option>
-                                <option value="UT">Utah</option>
-                                <option value="VT">Vermont</option>
-                                <option value="VA">Virginia</option>
-                                <option value="WA">Washington</option>
-                                <option value="WV">West Virginia</option>
-                                <option value="WI">Wisconsin</option>
-                                <option value="WY">Wyoming</option>
+                                <option value="" selected disabled>Choose...</option>
+                                {states.map((state, index) => (
+                                    <option key={index} value={state.abbreviation}>{state.name}</option>
+                                ))}
                             </select>
                         </div>
                         <div className="col-md-2">
@@ -149,8 +193,8 @@ const CreateEdit = () => {
                         </div>
                         <div className="container mt-3">
                             <label htmlFor="peopleCount" className="form-label">Maximum Number of People:</label>
-                            <input type="number" className="form-control" id="peopleCount" min="1" max="10" value={peopleCount} onChange={handlePeopleCountChange}/>
-                            <div id="peopleDisplay" className="mt-2">{peopleCount} out of 10</div>
+                            <input type="number" className="form-control" id="peopleCount" min="1" max="25" value={peopleCount} onChange={handlePeopleCountChange}/>
+                            <div id="peopleDisplay" className="mt-2">{peopleCount} out of 25</div>
                         </div>
                         <div className="container mt-3">
                             <label for="descriptionBox" className="form-label">Additional Information:</label>
@@ -158,7 +202,7 @@ const CreateEdit = () => {
                         </div> 
                         <div className="container mb-3">
                             <label for="customRange2" className="form-label">Level Of Expertise</label>
-                            <input type="range" className="form-range" min="0" max="3" id="customRange2" onChange={handleRangeChange}/>
+                            <input type="range" className="form-range" min="0" max="3" id="customRange2" defaultValue="0" onChange={handleRangeChange}/>
                             <div id="rangeValue">{expertiseLevel}</div>
                         </div> 
 

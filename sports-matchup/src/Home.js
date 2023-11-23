@@ -44,6 +44,7 @@ const Home = () => {
                                     <option value="hockey">Hockey</option>
                                     <option value="golf">Golf</option>
                                     <option value="tennis">Tennis</option>
+                                    <option value="other-sport">Other</option>
                                 </select>
                             </div>
                         </div>
