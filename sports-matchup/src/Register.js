@@ -8,8 +8,8 @@ const Register = () => {
 
     return (
         <main>
-            <section className="container mt-5">
-                <h2>Sign Up</h2>
+            <section className="container mt-5 bg-light bg-text-light">
+                <h1 className='text-center'>Sign Up</h1>
                 <form id="register-form" method="POST">
                     <div className="mb-3">
                         <label for="email">Email:</label>
