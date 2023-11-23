@@ -9,7 +9,7 @@ const Login = () => {
     return (
         <main>
             
-            <div id="login-form" className="container mt-5 bg-light bg-text-light">
+            <div id="login-form" className="container mt-2 bg-light bg-text-light">
                 <h1 className='text-center'>Login</h1>
                 <form id="login" method="POST">
                     <div className="mb-3">
