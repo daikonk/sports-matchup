@@ -2,11 +2,12 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link'
+import './App.css'
 
 const Navbar = ({ logo, logoStyle }) => {
   const location = useLocation();
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-custom fixed-top">
       <div className="container-fluid">
         <NavLink to="/home" className="navbar-brand" activeClassName="active">
           <img src={logo} alt="Sports Matchup logo" style={logoStyle} />

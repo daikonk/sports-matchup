@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.bg-custom {
+  background-color: #2c2b48; /* Custom color */
+}
