@@ -113,7 +113,7 @@ const CreateEdit = () => {
 
     return (
         <main>
-            <section className='bg-light bg-text-light'>
+            <section className='bg-light bg-text-light p-2'>
                 <h1 className="text-center mb-2"> Create Event</h1>
                 <div className="container mb-5">
                     <label for="eventName" className="form-label">Event Name</label>
@@ -206,11 +206,11 @@ const CreateEdit = () => {
                             <div id="rangeValue">{expertiseLevel}</div>
                         </div> 
 
-                        <div className="row mt-2">
-                            <div className="col-sm-10">
+                        <div className="btn-toolbar justify-content-between mt-2">
+                            <div className='btn-group'>
                                 <button type="button" className="btn btn-danger">Sign Out</button>
                             </div>
-                            <div className="col-sm-2">
+                            <div className="btn-group">
                                 <button type="submit" className="btn btn-primary">Save</button>
                                 <button type="reset" className="btn btn-secondary">Cancel</button>
                             </div>
