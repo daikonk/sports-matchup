@@ -62,7 +62,7 @@ const Profile = () => {
     return (
         <main>
             <section>
-                <div className="container text-center mt-2 bg-light text-bg-light py-2">
+                <div className="container text-center mt-2 bg-light text-bg-light py-3">
                     <h1>Profile Information</h1>
                     <div className="row">
                         <div className="col-3">
@@ -167,12 +167,11 @@ const Profile = () => {
                                 </div>
 
                                 {/* <!-- BUTTONS --> */}
-                                <div className="row mt-2">
-                                    <div className="col-sm-6">
+                                <div className="btn-toolbar justify-content-between mt-2">
+                                    <div className='btn-group'>
                                         <button type="button" className="btn btn-danger">Sign Out</button>
                                     </div>
-                                    <div className="col-sm-2">
-                                        
+                                    <div className="btn-group">
                                         <button type="submit" className="btn btn-primary">Save</button>
                                         <button type="reset" className="btn btn-secondary">Cancel</button>
                                     </div>
