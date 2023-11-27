@@ -1,0 +1,66 @@
+[
+    {
+        "id": 1,
+        "sport": "Basketball",
+        "date": "12/10/2023",
+        "location": "Viejas Arena",
+        "members": 10,
+        "title": "Pickup Game"
+    },
+    {
+        "id": 2,
+        "sport": "Soccer",
+        "date": "12/20/2023",
+        "location": "Snapdragon Stadium",
+        "members": 22,
+        "title": "Weekend match"
+    },
+    {
+        "id": 3,
+        "sport": "Soccer",
+        "date": "1/04/2024",
+        "location": "La Mesa Park",
+        "members": 18,
+        "title": "Fun play"
+    },
+    {
+        "id": 4,
+        "sport": "Tennis",
+        "date": "1/20/2024",
+        "location": "Aztec Tennis Courts",
+        "members": 4,
+        "title": "Newbie Game"
+    },
+    {
+        "id": 5,
+        "sport": "Baseball",
+        "date": "12/28/2023",
+        "location": "University Fields",
+        "members": 18,
+        "title": "Monthly Match"
+    },
+    {
+        "id": 6,
+        "sport": "Golf",
+        "date": "12/02/2023",
+        "location": "Del Cerro Country Club",
+        "members": 3,
+        "title": "18 Hole Pitch + Putt"
+    },
+    {
+        "id": 7,
+        "sport": "Volleyball",
+        "date": "12/11/2023",
+        "location": "Mission Bay",
+        "members": 8,
+        "title": "Beach Day Training"
+    },
+    {
+        "id": 8,
+        "sport": "Football",
+        "date": "12/23/2023",
+        "location": "Seau Field",
+        "members": 22,
+        "title": "Christmas Special Game"
+    }
+]
