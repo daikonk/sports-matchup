@@ -2,13 +2,18 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import home_png from './images/home.png'
-import events from './event_info.json'
+import axios from 'axios';
+
 const Home = () => {
     const location = useLocation();
     const [sortField, setSortField] = useState(null);
     const [sortDirection, setSortDirection] = useState('asc');
 
+    const [events, setEvents] = useState([]);
     const [selectedSport, setSelectedSport] = useState('');
+
+    const sports = ['Basketball', 'Baseball', 'Soccer', 'Football', 'Volleyball', 'Hockey', 'Golf', 'Tennis'];
+    const skillLevels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
 
     useEffect(() => {
         switch (location.hash) {
@@ -20,6 +25,16 @@ const Home = () => {
         }
       }, [location]);
 
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/sportevents/')
+            .then(response => {
+                setEvents(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }, []);
+
     const handleSort = (field) => {
         let direction = 'asc';
         if (sortField === field && sortDirection === 'asc') {
@@ -30,21 +45,40 @@ const Home = () => {
     };
 
     const sortedEvents = [...events].sort((a, b) => {
-        if (a[sortField] < b[sortField]) {
-            return sortDirection === 'asc' ? -1 : 1;
+        if (sortField === 'skill') {
+            return skillLevels.indexOf(a[sortField]) - skillLevels.indexOf(b[sortField]);
         }
-        if (a[sortField] > b[sortField]) {
-            return sortDirection === 'asc' ? 1 : -1;
+        if (sortField === 'datetime') {
+            // Convert the dates to Date objects
+            const dateA = new Date(a[sortField]);
+            const dateB = new Date(b[sortField]);
+    
+            // Use the getTime method to get the time value in milliseconds
+            return sortDirection === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+        } else {
+            if (a[sortField] < b[sortField]) {
+                return sortDirection === 'asc' ? -1 : 1;
+            }
+            if (a[sortField] > b[sortField]) {
+                return sortDirection === 'asc' ? 1 : -1;
+            }
+            return 0;
         }
-        return 0;
     });
-
     const handleSportChange = (event) => {
         setSelectedSport(event.target.value);
     };
 
-    const filteredEvents = sortedEvents.filter(event => !selectedSport || event.sport === selectedSport);
-
+    // const filteredEvents = sortedEvents.filter(event => !selectedSport || event.sport === selectedSport);
+    const filteredEvents = sortedEvents.filter(event => {
+        if (selectedSport.toLowerCase() === 'other') {
+            // If "Other" is selected, include events that do not match any of the predefined sports
+            return !sports.includes(event.sport);
+        } else {
+            // Otherwise, filter based on the selected sport
+            return !selectedSport || event.sport === selectedSport;
+        }
+    });
 
     return (
         <main>
@@ -64,15 +98,10 @@ const Home = () => {
                             <label for="search" className="col-sm-1 col-form-label">Search:</label>
                             <div className="col-sm-10">
                                 <select className="form-control" id="sport" value={selectedSport} onChange={handleSportChange}>
-                                    <option value="" selected>Select Sport...</option>
-                                    <option value="Basketball">Basketball</option>
-                                    <option value="Baseball">Baseball</option>
-                                    <option value="Soccer">Soccer</option>
-                                    <option value="Football">Football</option>
-                                    <option value="Volleyball">Volleyball</option>
-                                    <option value="Hockey">Hockey</option>
-                                    <option value="Golf">Golf</option>
-                                    <option value="Tennis">Tennis</option>
+                                    <option value="" selected>Filter Sports...</option>
+                                    {sports.map((sport, index) => (
+                                        <option key={index} value={sport}>{sport}</option>
+                                    ))}
                                     <option value="Other">Other</option>
                                 </select>
                             </div>
@@ -84,20 +113,35 @@ const Home = () => {
                             <thead>
                                 <tr>
                                     <th onClick={() => handleSort('sport')}>Sport</th>
-                                    <th onClick={() => handleSort('location')}>Location</th>
+                                    <th onClick={() => handleSort('datetime')}>Date</th>
+                                    <th onClick={() => handleSort('datetime')}>Time</th>
+                                    <th onClick={() => handleSort('location_address')}>Location</th>
+                                    <th onClick={() => handleSort('location_city')}>City</th>
                                     <th onClick={() => handleSort('members')}>Members</th>
-                                    <th onClick={() => handleSort('title')}>Title</th>
+                                    <th onClick={() => handleSort('skill')}>Skill Level</th>
+                                    <th onClick={() => handleSort('eventname')}>Title</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredEvents.map(event => (
-                                    <tr key={event.id}>
-                                        <td>{event.sport}</td>
-                                        <td>{event.location}</td>
-                                        <td>{event.members}</td>
-                                        <td>{event.title}</td>
-                                    </tr>
-                                ))}
+                                {filteredEvents.map(event => {
+                                    const date = new Date(event.datetime);
+
+                                    // Format the date and time
+                                    const formattedDate = date.toLocaleDateString();
+                                    const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                    return (
+                                        <tr key={event.id}>
+                                            <td>{event.sport}</td>
+                                            <td>{formattedDate}</td>
+                                            <td>{formattedTime}</td>
+                                            <td>{event.location_address}</td>
+                                            <td>{event.location_city}</td>
+                                            <td>{event.members}</td>
+                                            <td>{event.skill}</td>
+                                            <td>{event.eventname}</td>
+                                        </tr>
+                                    );
+                                    })}
                             </tbody>
                         </table>
                     </div>

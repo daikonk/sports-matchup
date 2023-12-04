@@ -40,3 +40,16 @@
 .bg-custom {
   background-color: #2c2b48; /* Custom color */
 }
+
+.custom-color {
+  color: rgb(21, 36, 244)
+}
+
+label {
+  padding-left: 4px;
+  line-height: 1px;
+}
+
+.add-padding {
+  padding-left: 4px;
+}
