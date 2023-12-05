@@ -1,5 +1,6 @@
 // Register.js
 import React, { useEffect } from 'react';
+import logoLogin from './images/sports.png';
 
 const Register = () => {
     useEffect(() => {
@@ -10,6 +11,7 @@ const Register = () => {
         <main>
             <section className="container mt-2 bg-light bg-text-light">
                 <h1 className='text-center'>Sign Up</h1>
+                <img src={logoLogin} alt="Sports Logo" className="logo-login-Image" />
                 <form id="register-form" method="POST">
                     <div className="mb-3">
                         <label for="email">Email:</label>

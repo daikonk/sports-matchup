@@ -1,6 +1,8 @@
 // .MyEvents.js
 import React, { useEffect, useState} from 'react';
 import axios from 'axios';
+import hockeyImage from './images/sports-hockey.png';
+import tennisImage from './images/sports-tennis.png';
 
 const MyEvents = () => {
     const [sortField, setSortField] = useState(null);
@@ -141,7 +143,11 @@ const MyEvents = () => {
                         </table>
                     </div>
                 </div>
-            </section>     
+            </section>   
+
+            <img src={hockeyImage} alt="HockeyImage" className="hockey-image" />
+            <img src={tennisImage} alt="TennisImage" className="tennis-image" />   
+            
         </main>
     );
 };

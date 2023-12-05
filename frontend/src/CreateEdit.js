@@ -7,6 +7,8 @@ import Datetime from 'react-datetime';
 import moment from 'moment';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import basketballImage from './images/sports-basketball.png';
+import soccerImage from './images/sports-soccer.png';
 
 import axios from 'axios';
 import './App.css';
@@ -344,7 +346,8 @@ const CreateEdit = () => {
                     </form>
                 </div>
             </section>
-
+            <img src={soccerImage} alt="Soccerl" className="soccer-image" />
+            <img src={basketballImage} alt="Basketball" className="basketball-image" />
         </main>
     );
 };

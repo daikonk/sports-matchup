@@ -1,5 +1,6 @@
 // Login.js
 import React, { useEffect } from 'react';
+import logoLogin from './images/sports.png';
 
 const Login = () => {
     useEffect(() => {
@@ -11,6 +12,7 @@ const Login = () => {
             
             <div id="login-form" className="container mt-2 bg-light bg-text-light p-2">
                 <h1 className='text-center'>Login</h1>
+                <img src={logoLogin} alt="Sports Logo" className="logo-login-Image" />
                 <form id="login" method="POST">
                     <div className="mb-3">
                         <label for="email" className="form-label">Email:</label>
