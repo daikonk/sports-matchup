@@ -169,7 +169,7 @@ const Profile = () => {
                                             className="form-control"
                                             id="email"
                                             placeholder="Enter your email"
-                                            value={user.email}
+                                            value={user ? user.email : ''}
                                             readOnly // This makes the input read-only
                                         />
                                     </div>

@@ -1,5 +1,6 @@
 # SportEvent/authentication.py
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
@@ -36,6 +37,34 @@ def register_user(request):
         return Response(response_data, status=status.HTTP_201_CREATED)
 
     return Response({"message": "Invalid request method"}, status=status.HTTP_400_BAD_REQUEST)
+
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def login_user(request):
+    if request.method == 'POST':
+        username = request.data.get('username')
+        password = request.data.get('password')
+        print(username)
+        print(password)
+
+        user = authenticate(request, username=username, password=password)
+       
+        if user is not None:
+            print("user_instance:", user)
+            access_token = AccessToken.for_user(user)
+            response_data = {
+                "message": "Login successful",
+                "user_id": user.id,
+                "email": user.email,
+                "access_token": str(access_token),
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    return Response({"message": "Invalid request method"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

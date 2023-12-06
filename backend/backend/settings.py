@@ -156,3 +156,7 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
