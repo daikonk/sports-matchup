@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import profile_pic from './images/profile.png'
 import Modal from 'react-bootstrap/Modal';
 import { useAuth } from './AuthContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
 const Profile = () => {
-    const { token, user } = useAuth();
+    const { token, user, signOut } = useAuth();
     const skillLevels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
 
     const [show, setShow] = useState(false);
@@ -15,6 +15,7 @@ const Profile = () => {
     const [selectedSport, setSelectedSport] = useState('');
     const [sports, setSports] = useState(['Basketball', 'Baseball', 'Soccer', 'Football', 'Volleyball', 'Hockey', 'Golf', 'Tennis']);
     const [selectedSkill, setSelectedSkill] = useState('');
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -68,6 +69,11 @@ const Profile = () => {
         return <Navigate to="/login" />;
     }
     console.log('User details in profile:', user);
+    const handleSignOut = () => {
+        // Call the signOut function to log the user out
+        signOut();
+        navigate('/profile');
+    };
 
     return (
         <main>
@@ -186,7 +192,7 @@ const Profile = () => {
                                 {/* <!-- BUTTONS --> */}
                                 <div className="btn-toolbar justify-content-between mt-2">
                                     <div className='btn-group'>
-                                        <button type="button" className="btn btn-danger">Sign Out</button>
+                                        <button type="button" className="btn btn-danger" onClick={handleSignOut}>Sign Out</button>
                                     </div>
                                     <div className="btn-group">
                                         <button type="submit" className="btn btn-primary">Save</button>

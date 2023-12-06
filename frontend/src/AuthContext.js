@@ -1,4 +1,4 @@
-// AuthContext.js (Frontend)
+// AuthContext.js
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -11,6 +11,15 @@ export const AuthProvider = ({ children }) => {
   const saveToken = (newToken) => {
     console.log(`Auth context token: ${newToken}`);
     setToken(newToken);
+  };
+
+  const signOut = () => {
+    // Clear the token and user information
+    setToken(null);
+    setUser(null);
+
+    // Optional: Add additional logic, such as redirecting to the login page
+    // history.push('/login');
   };
 
   const fetchUserDetails = async () => {
@@ -30,7 +39,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const userData = await response.json();
-        console.log(`jwt auth code packed with:`, JSON.stringify(userData, null, 2))
+        console.log(`jwt auth code packed with:`, JSON.stringify(userData, null, 2));
         setUser(userData);
       } else {
         // If the server responds with an error, clear the user state
@@ -47,7 +56,7 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   return (
-    <AuthContext.Provider value={{ token, saveToken, user }}>
+    <AuthContext.Provider value={{ token, saveToken, user, signOut }}>
       {children}
     </AuthContext.Provider>
   );
