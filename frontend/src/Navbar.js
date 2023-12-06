@@ -2,10 +2,12 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link'
+import { useAuth } from './AuthContext';
 import './App.css'
 
 const Navbar = ({ logo, logoStyle }) => {
   const location = useLocation();
+  const { token } = useAuth();
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-custom fixed-top">
       <div className="container-fluid">
@@ -31,26 +33,31 @@ const Navbar = ({ logo, logoStyle }) => {
                 Discover Events
               </HashLink>
             </li>
-            <li className="nav-item">
-              <NavLink to="/create-edit-events" className="nav-link" activeClassName="active">
-                Create Events
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/my-events" className="nav-link" activeClassName="active">
-                My Events
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/profile" className="nav-link" activeClassName="active">
-                Profile
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/login" className="nav-link" activeClassName="active">
-                Login/Sign Up
-              </NavLink>
-            </li>
+            {token ? 
+              <>
+                <li className="nav-item">
+                  <NavLink to="/create-edit-events" className="nav-link" activeClassName="active">
+                    Create Events
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/my-events" className="nav-link" activeClassName="active">
+                    My Events
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/profile" className="nav-link" activeClassName="active">
+                    Profile
+                  </NavLink>
+                </li>
+              </>
+            :
+              <li className="nav-item">
+                <NavLink to="/login" className="nav-link" activeClassName="active">
+                  Login/Sign Up
+                </NavLink>
+              </li>
+            }
           </ul>
         </div>
       </div>

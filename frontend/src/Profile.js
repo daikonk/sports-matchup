@@ -7,7 +7,7 @@ import { Navigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
 const Profile = () => {
-    const { token, user } = useAuth();
+    const { token, user, saveToken } = useAuth();
     const skillLevels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
 
     const [show, setShow] = useState(false);
@@ -57,6 +57,13 @@ const Profile = () => {
             reader.readAsDataURL(event.target.files[0]);
         }
     };
+
+    const signOut = () => {
+
+        saveToken(null);
+        console.log('logged out');
+
+    }
 
     useEffect(() => {
         document.title = 'Profile - Sports Matchup';
@@ -186,7 +193,7 @@ const Profile = () => {
                                 {/* <!-- BUTTONS --> */}
                                 <div className="btn-toolbar justify-content-between mt-2">
                                     <div className='btn-group'>
-                                        <button type="button" className="btn btn-danger">Sign Out</button>
+                                        <button type="button" className="btn btn-danger" onClick={signOut}>Sign Out</button>
                                     </div>
                                     <div className="btn-group">
                                         <button type="submit" className="btn btn-primary">Save</button>
