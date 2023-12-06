@@ -17,3 +17,8 @@ class SportEvent(models.Model):
 
     def __str__(self):
         return self.name
+
+class User(models.Model):
+    email = models.EmailField(unique=True)
+    username = models.CharField(unique=True)
+    password = models.CharField(max_length=128) 

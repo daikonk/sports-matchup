@@ -12,6 +12,7 @@ import Profile from './Profile';
 import Login from './Login';
 import Register from './Register';
 import Footer from './Footer';
+import { AuthProvider } from './AuthContext';
 
 const ScrollToTop = () => {
   const location = useLocation();
@@ -35,24 +36,26 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <Navbar logo={logo} logoStyle={logoStyle} />
-      <div>
-        <div className="container" style={customStyles}>
-          <ScrollToTop/>
-          <Routes>
-            <Route path="/" element={<Navigate to="/home" replace />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/create-edit-events" element={<CreateEdit />} />
-            <Route path="/my-events" element={<MyEvents />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
+    <AuthProvider>
+      <Router>
+        <Navbar logo={logo} logoStyle={logoStyle} />
+        <div>
+          <div className="container" style={customStyles}>
+            <ScrollToTop/>
+            <Routes>
+              <Route path="/" element={<Navigate to="/home" replace />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/create-edit-events" element={<CreateEdit />} />
+              <Route path="/my-events" element={<MyEvents />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-      <Footer />
-    </Router>
+        <Footer />
+      </Router>
+    </AuthProvider>
   );
 };
 

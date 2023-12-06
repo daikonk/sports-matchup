@@ -28,15 +28,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CORS_ORIGIN_ALLOW_ALL = True
-
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'sports-matchup/build/static'),
 ]
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,11 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'backend',
     'rest_framework',
-    'corsheaders',
     'SportEvent',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,8 +56,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -136,3 +140,23 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    # Add more origins as needed
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
