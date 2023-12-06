@@ -9,7 +9,6 @@ const Register = () => {
   useEffect(() => {
     document.title = 'Sign Up - Sports Matchup';
   }, []);
-  
   const [formData, setFormData] = useState({
     username: '',
     email: '',
