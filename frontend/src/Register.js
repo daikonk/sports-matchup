@@ -84,7 +84,7 @@ const Register = () => {
     <section className="container mt-2 bg-light bg-text-light p-2">
       <h1 className="text-center">Sign Up</h1>
       <div className="d-flex flex-row justify-content-center">
-        <img src={logoLogin} alt="Sports Logo" className="w-25 h-25" />
+        
       </div>
       <form id="register-form" onSubmit={handleSubmit}>
       <div className="mb-3">

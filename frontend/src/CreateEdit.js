@@ -346,8 +346,7 @@ const CreateEdit = () => {
                     </form>
                 </div>
             </section>
-            <img src={soccerImage} alt="Soccerl" className="soccer-image" />
-            <img src={basketballImage} alt="Basketball" className="basketball-image" />
+
         </main>
     );
 };

@@ -145,8 +145,7 @@ const MyEvents = () => {
                 </div>
             </section>   
 
-            <img src={hockeyImage} alt="HockeyImage" className="hockey-image" />
-            <img src={tennisImage} alt="TennisImage" className="tennis-image" />   
+ 
             
         </main>
     );
