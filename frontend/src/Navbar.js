@@ -12,8 +12,8 @@ const Navbar = ({ logo, logoStyle }) => {
     <nav className="navbar navbar-expand-sm navbar-dark bg-custom fixed-top">
       <div className="container-fluid">
         <NavLink to="/home" className="navbar-brand" activeClassName="active">
-          <img src={logo} alt="Sports Matchup logo" style={logoStyle} />
-          Sports Matchup
+          <img src={logo} alt="Sports Matchup logo" style={logoStyle} className='' />
+          <span className='sports-matchup-text'>Sports Matchup</span>
         </NavLink>
         <button
           className="navbar-toggler"
@@ -30,31 +30,31 @@ const Navbar = ({ logo, logoStyle }) => {
           <ul className="navbar-nav">
             <li className="nav-item">
               <HashLink smooth to="/home#discover-events" className={`nav-link ${location.hash === '#discover-events' ? 'active' : ''}`}>
-                Discover Events
+              <span className='roboto-style'>Discover Events</span>
               </HashLink>
             </li>
             {token ? 
               <>
                 <li className="nav-item">
                   <NavLink to="/create-edit-events" className="nav-link" activeClassName="active">
-                    Create Events
+                  <span className='roboto-style'>Create Events</span>
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink to="/my-events" className="nav-link" activeClassName="active">
-                    My Events
+                  <span className='roboto-style'>My Events</span>
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink to="/profile" className="nav-link" activeClassName="active">
-                    Profile
+                  <span className='roboto-style'>Profile</span>
                   </NavLink>
                 </li>
               </>
             :
               <li className="nav-item">
                 <NavLink to="/login" className="nav-link" activeClassName="active">
-                  Login/Sign Up
+                <span className='roboto-style'>Login/Sign Up</span>
                 </NavLink>
               </li>
             }

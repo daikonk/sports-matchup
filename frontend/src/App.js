@@ -27,8 +27,9 @@ const App = () => {
 
   const logoStyle = {
     marginRight: '10px', // Adjust the margin as needed
-    width: '36px',
-    height: '32px'
+    width: '42px',
+    height: 'auto',
+
   };
 
   const customStyles = {

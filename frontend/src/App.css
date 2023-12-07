@@ -42,7 +42,11 @@
 }
 
 .custom-color {
-  color: rgb(21, 36, 244)
+  color: rgb(247, 247, 247);
+}
+
+footer {
+  background-color: #061c46;
 }
 
 label {
@@ -87,4 +91,32 @@ label {
   margin: 0 auto; 
   max-width: 400px; 
   height: auto;
+}
+
+.profile-img-container {
+  width: 250px; /* Adjust the width as needed */
+  height: 250px; /* Adjust the height as needed */
+  overflow: hidden;
+  position: relative;
+}
+
+.img-transparent {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Hide the background by covering the container */
+}
+
+nav {
+  height: 52px;
+  align-items: center;
+}
+
+.sports-matchup-text {
+  font-size: 22px;
+  font-family: Roboto;
+}
+
+.roboto-style{
+  font-family: Roboto;
+  font-size: 17px;
 }

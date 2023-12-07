@@ -1,10 +1,9 @@
 // Profile.js
 import React, { useEffect, useState } from 'react';
 import profile_pic from './images/profile.png'
-import Modal from 'react-bootstrap/Modal';
+import { Button, Modal } from 'react-bootstrap';
 import { useAuth } from './AuthContext';
 import { Navigate, useNavigate } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 
 const Profile = () => {
     const { token, user, signOut } = useAuth();
@@ -83,7 +82,7 @@ const Profile = () => {
                     <div className="row">
                         <div className="col-3">
                             <div style={{ position: 'relative', display: 'inline-block' }}>
-                                <img id="profile-picture" src={selectedImage} alt="Profile Picture" className="img-fluid" onClick={handleImageClick} />
+                                <img id="profile-picture" src={selectedImage} alt="Profile Picture" className="profile-img-container" onClick={handleImageClick} />
                                 <button style={{
                                     position: 'absolute',
                                     top: '10px',
@@ -93,7 +92,7 @@ const Profile = () => {
                                     onMouseOver={(e) => e.target.style.display = 'block'}
                                     onMouseOut={(e) => e.target.style.display = 'none'}
                                     onClick={handleImageClick}>Edit</button>
-                                <input type="file" id="file-input" style={{ display: 'none' }} onChange={handleFileChange} />
+                                <input type="file" id="file-input" style={{ display: 'none' }} onChange={handleFileChange}/>
                             </div>
                         </div>
                         <div className="col-9">
@@ -102,7 +101,7 @@ const Profile = () => {
                                 <div className="form-group row mt-1">
                                     <label for="name" className="col-sm-2 col-form-label">Name:</label>
                                     <div className="col-sm-10">
-                                        <input type="text" className="form-control" id="name" placeholder="Enter your name" />
+                                        <input type="text" className="form-control" id="name" placeholder="Enter your name" required/>
                                     </div>
                                 </div>
 
@@ -110,7 +109,7 @@ const Profile = () => {
                                 <div className="form-group row mt-1">
                                     <label for="age" className="col-sm-2 col-form-label">Age:</label>
                                     <div className="col-sm-10">
-                                        <input type="number" className="form-control" id="age" placeholder="Enter your age" />
+                                        <input type="number" className="form-control" id="age" placeholder="Enter your age" required/>
                                     </div>
                                 </div>
 
@@ -118,7 +117,7 @@ const Profile = () => {
                                 <div className="form-group row mt-1">
                                     <label for="sport_pref" className="col-sm-2 col-form-label">Sports Preferences:</label>
                                     <div className="col-sm-10">
-                                        <select className="form-control" id="sport" value={selectedSport} onChange={handleSportChange}>
+                                        <select className="form-control" id="sport" value={selectedSport} onChange={handleSportChange} required>
                                             <option value="" disabled>Select Sports...</option>
                                             {sports.map((sport, index) => (
                                                 <option key={index} value={sport.toLowerCase()}>{sport}</option>
@@ -131,7 +130,7 @@ const Profile = () => {
                                                 <Modal.Title>Add a Sport</Modal.Title>
                                             </Modal.Header>
                                             <Modal.Body>
-                                                <input type="text" className="form-control" placeholder="Enter sport name" onChange={handleNewSportChange} />
+                                                <input type="text" className="form-control" placeholder="Enter sport name" onChange={handleNewSportChange} required/>
                                             </Modal.Body>
                                             <Modal.Footer>
                                                 <Button variant="secondary" onClick={handleClose}>
@@ -149,7 +148,7 @@ const Profile = () => {
                                 <div className="form-group row mt-1">
                                     <label for="skill" className="col-sm-2 col-form-label">Skill Level:</label>
                                     <div className="col-sm-10">
-                                        <select className="form-control" id="skill" value={selectedSkill} onChange={handleSkillChange}>
+                                        <select className="form-control" id="skill" value={selectedSkill} onChange={handleSkillChange} required>
                                             <option value="" selected disabled>Select Skill Level</option>
                                             {skillLevels.map((skill, index) => (
                                                 <option key={index} value={skill.toLowerCase()}>{skill}</option>
@@ -162,7 +161,7 @@ const Profile = () => {
                                 <div className="form-group row mt-1">
                                     <label for="location" className="col-sm-2 col-form-label">Location:</label>
                                     <div className="col-sm-10">
-                                        <input type="text" className="form-control" id="location" placeholder="Enter your city" />
+                                        <input type="text" className="form-control" id="location" placeholder="Enter your city" required/>
                                     </div>
                                 </div>
 
@@ -183,7 +182,7 @@ const Profile = () => {
 
                                 {/* <!-- PHONE --> */}
                                 <div className="form-group row mt-1">
-                                    <label for="phone" className="col-sm-2 col-form-label">Phone #:</label>
+                                    <label for="phone" className="col-sm-2 col-form-label">Phone #: required</label>
                                     <div className="col-sm-10">
                                         <input type="text" className="form-control" id="phone" placeholder="Enter your number" />
                                     </div>

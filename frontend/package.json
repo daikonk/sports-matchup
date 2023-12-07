@@ -13,6 +13,7 @@
     "react-bootstrap": "^2.9.1",
     "react-datetime": "^3.2.0",
     "react-dom": "^18.2.0",
+    "react-image-crop": "^11.0.1",
     "react-phone-number-input": "^3.3.7",
     "react-router-dom": "^6.19.0",
     "react-router-hash-link": "^2.4.3",
