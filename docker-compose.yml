@@ -1,9 +1,12 @@
 version: '3'
 services:
   backend:
-    build: .
+    image: daikonk/sm-backend:latest
+    container_name: "sm-backend"
     ports:
-      - "8000:8000"
-    volumes:
-      - .:/backend
+      - "3000:3000"
+    
+  frontend:
+    image: daikonk/sm-frontend:latest
+    container_name: "sm-frontend"
     
