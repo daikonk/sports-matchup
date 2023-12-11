@@ -39,7 +39,7 @@ jobs:
         
 
     - name: build sm-worker
-      run: docker build -t daikonk/sm-worker ./enginx
+      run: docker build -t daikonk/sm-worker ./nginx
     - name: push sm-worker
       run: docker push daikonk/sm-worker
 
