@@ -25,16 +25,14 @@ jobs:
     - name: push sm-frontend
       run: docker push daikonk/sm-frontend
 
+
+    - name: create env
+      run: |
+        echo "${{ secrets.ENV_FILE }}" > .env
     - name: build sm-backend
       run: docker build -t daikonk/sm-backend ./backend
     - name: push sm-backend
       run: docker push daikonk/sm-backend
-      env:
-        DB_NAME: ${{secrets.DB_NAME}}
-        DB_USER: ${{secrets.DB_USER}}
-        DB_PASSWORD: ${{secrets.DB_PASSWORD}}
-        HOST_ENDPOINT: ${{secrets.HOST_ENDPOINT}}
-        DB_PORT: ${{secrets.DB_PORT}}
         
 
     - name: build sm-worker
