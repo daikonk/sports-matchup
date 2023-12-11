@@ -28,7 +28,10 @@ jobs:
 
     - name: create env
       run: |
-        echo "${{ secrets.ENV_FILE }}" > .env
+        cd backend
+        touch .env
+        echo "${{ secrets.ENV_FILE }}" >> .env
+        cd ..
     - name: build sm-backend
       run: docker build -t daikonk/sm-backend ./backend
     - name: push sm-backend
