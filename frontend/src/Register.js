@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { Modal, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 const Register = () => {
+
   useEffect(() => {
     document.title = 'Sign Up - Sports Matchup';
   }, []);
@@ -16,7 +18,7 @@ const Register = () => {
     confirmPassword: '',
   });
   const [passwordError, setPasswordError] = useState('');
-  const { saveToken } = useAuth();
+  const { saveToken, saveUserEmail, saveUserId } = useAuth();
   const navigate = useNavigate(); // Initialize useNavigate
   const [error, setError] = useState(null);
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -64,6 +66,8 @@ const Register = () => {
         const responseData = await response.json();
         console.log('Response Data:', responseData);
         saveToken(responseData.access_token);
+        saveUserEmail(responseData.email);
+        saveUserId(responseData.user_id);
         navigate('/profile');
       } else {
         // Handle errors

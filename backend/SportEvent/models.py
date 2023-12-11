@@ -1,6 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class SportEvent(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     sport = models.CharField(max_length=200)
     eventname = models.CharField(max_length=200)
     members = models.IntegerField(default=0)
@@ -16,9 +18,15 @@ class SportEvent(models.Model):
     skill = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.name
+        return self.eventname
 
-class User(models.Model):
-    email = models.EmailField(unique=True)
-    username = models.CharField(unique=True)
-    password = models.CharField(max_length=128) 
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    age = models.IntegerField(default=0)
+    sport = models.CharField(max_length=200)
+    skill = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    phone_num = models.CharField(max_length=200)
+    profile_pic = models.ImageField(upload_to='profile_pics/', null=True, blank=True)

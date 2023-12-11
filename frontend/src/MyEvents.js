@@ -3,6 +3,8 @@ import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import hockeyImage from './images/sports-hockey.png';
 import tennisImage from './images/sports-tennis.png';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 const MyEvents = () => {
     const [sortField, setSortField] = useState(null);
@@ -10,9 +12,10 @@ const MyEvents = () => {
     
     const [events, setEvents] = useState([]);
     const skillLevels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+    const { userId, token } = useAuth();
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/sportevents/')
+        axios.get(`http://localhost:8000/api/sportevents/?user=${userId}`)
             .then(response => {
                 setEvents(response.data);
             })
@@ -55,6 +58,11 @@ const MyEvents = () => {
     useEffect(() => {
         document.title = 'My Events - Sports Matchup';
       }, []);
+
+    if (!token) {
+    console.log(`Navigating to login`)
+    return <Navigate to="/login" />;
+    }
 
     return (
         <main>

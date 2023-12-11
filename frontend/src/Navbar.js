@@ -1,13 +1,26 @@
-// Navbar.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link'
+import { HashLink } from 'react-router-hash-link';
 import { useAuth } from './AuthContext';
-import './App.css'
+import axios from 'axios';
+import './App.css';
+import Image from 'react-bootstrap/Image';  // Import Image from react-bootstrap
+import profile_pic from './images/profile.png'
 
 const Navbar = ({ logo, logoStyle }) => {
   const location = useLocation();
-  const { token } = useAuth();
+  const { token, userId } = useAuth();
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/api/sportevents/?user=${userId}`)
+        .then(response => {
+            setEvents(response.data);
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+  }, []);
+
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-custom fixed-top">
       <div className="container-fluid">
@@ -30,36 +43,41 @@ const Navbar = ({ logo, logoStyle }) => {
           <ul className="navbar-nav">
             <li className="nav-item">
               <HashLink smooth to="/home#discover-events" className={`nav-link ${location.hash === '#discover-events' ? 'active' : ''}`}>
-              <span className='roboto-style'>Discover Events</span>
+              <span className='roboto-style-navbar'>Discover Events</span>
               </HashLink>
             </li>
             {token ? 
               <>
                 <li className="nav-item">
                   <NavLink to="/create-edit-events" className="nav-link" activeClassName="active">
-                  <span className='roboto-style'>Create Events</span>
+                  <span className='roboto-style-navbar'>Create Events</span>
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink to="/my-events" className="nav-link" activeClassName="active">
-                  <span className='roboto-style'>My Events</span>
+                  <span className='roboto-style-navbar'>My Events</span>
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink to="/profile" className="nav-link" activeClassName="active">
-                  <span className='roboto-style'>Profile</span>
+                  <span className='roboto-style-navbar'>Profile</span>
                   </NavLink>
                 </li>
               </>
             :
               <li className="nav-item">
                 <NavLink to="/login" className="nav-link" activeClassName="active">
-                <span className='roboto-style'>Login/Sign Up</span>
+                <span className='roboto-style-navbar'>Login/Sign Up</span>
                 </NavLink>
               </li>
             }
           </ul>
         </div>
+        {token && 
+          <div>
+            <Image src={profile_pic} roundedCircle style={{ width: '35px', height: '35px' }} />  {/* Add this line */}
+          </div>
+        }
       </div>
     </nav>
   );

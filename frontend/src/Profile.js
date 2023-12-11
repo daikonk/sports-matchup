@@ -4,9 +4,13 @@ import profile_pic from './images/profile.png'
 import { Button, Modal } from 'react-bootstrap';
 import { useAuth } from './AuthContext';
 import { Navigate, useNavigate } from 'react-router-dom';
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
+import axios from 'axios';
 
 const Profile = () => {
     const { token, user, signOut } = useAuth();
+    const { userEmail, userId } = useAuth()
     const skillLevels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
 
     const [show, setShow] = useState(false);
@@ -14,10 +18,18 @@ const Profile = () => {
     const [selectedSport, setSelectedSport] = useState('');
     const [sports, setSports] = useState(['Basketball', 'Baseball', 'Soccer', 'Football', 'Volleyball', 'Hockey', 'Golf', 'Tennis']);
     const [selectedSkill, setSelectedSkill] = useState('');
+    const [Phonevalue, PhonesetValue] = useState()
     const navigate = useNavigate(); // Initialize useNavigate
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const handleShowConfirmation = () => setShowConfirmation(true);
+    const handleCloseConfirmation = () => {
+        setShowConfirmation(false);
+    }
+
 
     const handleSportChange = (event) => {
         if (event.target.value === 'add-sport') {
@@ -49,18 +61,109 @@ const Profile = () => {
     const handleFileChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             let reader = new FileReader();
-
+    
             reader.onload = (e) => {
                 setSelectedImage(e.target.result);
+                document.getElementById('profile-picture-display').src = e.target.result;
             };
-
+    
             reader.readAsDataURL(event.target.files[0]);
         }
     };
 
+    const handleSubmit = (event) => {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Gather the data from the form fields
+        const profileData = {
+            user: userId,
+            name: document.getElementById('name').value,
+            age: document.getElementById('age').value,
+            sport: document.getElementById('sport').value,
+            skill: document.getElementById('skill').value,
+            location: document.getElementById('location').value,
+            email: document.getElementById('email').value,
+            phone_num: document.getElementById('inputPhoneNumber').value,
+            profile_pic: document.getElementById('file-input').files[0]
+        };
+        console.log(profileData);
+    
+        // Get the UserProfile instance for the current user
+        axios.get(`http://localhost:8000/api/profiles/?user=${userId}`)
+            .then(response => {
+                // Check if a UserProfile instance exists for the current user
+                if (response.data.length > 0) {
+                    // Get the ID of the UserProfile instance
+                    const id = response.data[0].user;
+    
+                    // Send a PUT request to the Django server to update the UserProfile instance
+                    axios.put(`http://localhost:8000/api/profiles/${id}/`, profileData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                        .then(response => {
+                            console.log(response);
+                            // Handle successful response here
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            // Handle error here
+                        });
+                        // handleShowConfirmation();
+                } else {
+                    // Send a POST request to the Django server to create a new UserProfile instance
+                    axios.post('http://localhost:8000/api/profiles/', profileData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                        .then(response => {
+                            console.log(response);
+                            // Handle successful response here
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            // Handle error here
+                        });
+                        // handleShowConfirmation();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                // Handle error here
+            });
+    };
+
+    console.log(userId)
+
     useEffect(() => {
         document.title = 'Profile - Sports Matchup';
         console.log(`profile`);
+    }, []);
+
+    useEffect(() => {
+        // Fetch the current user's profile data from the server
+        axios.get(`http://localhost:8000/api/profiles/?user=${userId}`)
+            .then(response => {
+                if (response.data.length > 0) {
+                    // Update the state with the fetched data
+                    const profile = response.data[0];
+                    document.getElementById('name').value = profile.name;
+                    document.getElementById('age').value = profile.age;
+                    document.getElementById('sport').value = profile.sport;
+                    document.getElementById('skill').value = profile.skill;
+                    document.getElementById('location').value = profile.location;
+                    document.getElementById('email').value = profile.email;
+                    document.getElementById('inputPhoneNumber').value = profile.phone_num;
+                    setSelectedImage(profile.profile_pic);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                // Handle error here
+            });
     }, []);
 
     if (!token) {
@@ -79,24 +182,24 @@ const Profile = () => {
             <section>
                 <div className="container text-center mt-2 bg-light text-bg-light py-3">
                     <h1>Profile Information</h1>
-                    <div className="row">
-                        <div className="col-3">
-                            <div style={{ position: 'relative', display: 'inline-block' }}>
-                                <img id="profile-picture" src={selectedImage} alt="Profile Picture" className="profile-img-container" onClick={handleImageClick} />
-                                <button style={{
-                                    position: 'absolute',
-                                    top: '10px',
-                                    right: '10px',
-                                    display: 'none'
-                                }}
-                                    onMouseOver={(e) => e.target.style.display = 'block'}
-                                    onMouseOut={(e) => e.target.style.display = 'none'}
-                                    onClick={handleImageClick}>Edit</button>
-                                <input type="file" id="file-input" style={{ display: 'none' }} onChange={handleFileChange}/>
+                    <form id="form" className="mt-4" onSubmit={handleSubmit} enctype="multipart/form-data">
+                        <div className="row">
+                            <div className="col-3">
+                                <div style={{ position: 'relative', display: 'inline-block' }}>
+                                    <img id="profile-picture-display" src={selectedImage} alt="Profile Picture" className="profile-img-container" onClick={handleImageClick} />
+                                    <button style={{
+                                        position: 'absolute',
+                                        top: '10px',
+                                        right: '10px',
+                                        display: 'none'
+                                    }}
+                                        onMouseOver={(e) => e.target.style.display = 'block'}
+                                        onMouseOut={(e) => e.target.style.display = 'none'}
+                                        onClick={handleImageClick}>Edit</button>
+                                    <input type="file" id="file-input" style={{ display: 'none' }} onChange={handleFileChange}/>
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-9">
-                            <form id="form" className="mt-4">
+                            <div className="col-9">
                                 {/* <!-- NAME --> */}
                                 <div className="form-group row mt-1">
                                     <label for="name" className="col-sm-2 col-form-label">Name:</label>
@@ -115,7 +218,7 @@ const Profile = () => {
 
                                 {/* <!-- SPORTS --> */}
                                 <div className="form-group row mt-1">
-                                    <label for="sport_pref" className="col-sm-2 col-form-label">Sports Preferences:</label>
+                                    <label for="sport_pref" className="col-sm-2 col-form-label">Sport Preference:</label>
                                     <div className="col-sm-10">
                                         <select className="form-control" id="sport" value={selectedSport} onChange={handleSportChange} required>
                                             <option value="" disabled>Select Sports...</option>
@@ -174,17 +277,17 @@ const Profile = () => {
                                             className="form-control"
                                             id="email"
                                             placeholder="Enter your email"
-                                            value={user ? user.email : ''}
-                                            readOnly // This makes the input read-only
+                                            value={userEmail}
+                                            // readOnly
                                         />
                                     </div>
                                 </div>
 
                                 {/* <!-- PHONE --> */}
                                 <div className="form-group row mt-1">
-                                    <label for="phone" className="col-sm-2 col-form-label">Phone #: required</label>
+                                    <label for="phone" className="col-sm-2 col-form-label">Phone #:</label>
                                     <div className="col-sm-10">
-                                        <input type="text" className="form-control" id="phone" placeholder="Enter your number" />
+                                        <PhoneInput placeholder="Enter phone number" defaultCountry="US" value={Phonevalue} onChange={PhonesetValue} id="inputPhoneNumber" required/>
                                     </div>
                                 </div>
 
@@ -198,9 +301,20 @@ const Profile = () => {
                                         <button type="reset" className="btn btn-secondary">Cancel</button>
                                     </div>
                                 </div>
-                            </form>
+                                <Modal show={showConfirmation} onHide={handleCloseConfirmation}>
+                                    <Modal.Header closeButton>
+                                    <Modal.Title>Confirmation</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>Your profile was saved!</Modal.Body>
+                                    <Modal.Footer>
+                                    <Button variant="primary" onClick={handleCloseConfirmation}>
+                                        Done
+                                    </Button>
+                                    </Modal.Footer>
+                                </Modal>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
 
