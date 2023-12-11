@@ -1,12 +1,29 @@
 version: '3'
 services:
+
+
   backend:
     image: daikonk/sm-backend:latest
     container_name: "sm-backend"
+    restart: always
+    env_file:
+      - DB_CREDS.env
+
+
+  nginx:
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+    image: daikonk/sm-worker:latest
     ports:
-      - "3000:3000"
-    
+      - "3000:80"
+
+
   frontend:
     image: daikonk/sm-frontend:latest
     container_name: "sm-frontend"
-    
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    restart: always

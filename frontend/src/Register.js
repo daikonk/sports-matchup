@@ -50,7 +50,7 @@ const Register = () => {
     setPasswordError('');
 
     try {
-      const response = await fetch('http://localhost:8000/registeruser/', {
+      const response = await fetch('/api/api/registeruser/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

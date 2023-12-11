@@ -12,7 +12,7 @@ const MyEvents = () => {
     const skillLevels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/sportevents/')
+        axios.get('/api/api/sportevents/')
             .then(response => {
                 setEvents(response.data);
             })

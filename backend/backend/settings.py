@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-z*3mca-j@shr-=1v@1sj%7upib1$f_qe9eiid*s$5(8*alhnu!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'sports-matchup/build/static'),
@@ -98,7 +98,7 @@ DATABASES = {
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('HOST_ENDPOINT'),
-        'PORT': os.getenv('PORT'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
@@ -146,10 +146,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    # Add more origins as needed
-]
+CORS_ALLOW_ALL_ORIGINS=True
 
 CORS_ALLOW_METHODS = [
     'DELETE',

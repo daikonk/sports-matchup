@@ -26,7 +26,7 @@ const Home = () => {
       }, [location]);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/sportevents/')
+        axios.get('/api/api/sportevents/')
             .then(response => {
                 setEvents(response.data);
             })

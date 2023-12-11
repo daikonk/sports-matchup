@@ -194,7 +194,7 @@ const CreateEdit = () => {
         };
     
         // Send a POST request to the Django server
-        axios.post('http://localhost:8000/api/sportevents/', eventData)
+        axios.post('/api/api/sportevents/', eventData)
             .then(response => {
                 console.log(response);
                 // Handle successful response here

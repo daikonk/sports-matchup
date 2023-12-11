@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       // Make a request to the server to get user details
-      const response = await fetch('http://localhost:8000/api/user-details', {
+      const response = await fetch('/api/api/user-details', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

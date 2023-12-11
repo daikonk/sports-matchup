@@ -1,12 +1,11 @@
-FROM node:alpine
+FROM node:alpine as builder
+WORKDIR /app
+COPY ./package.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-WORKDIR /frontend
-COPY public/ /frontend/public
-COPY src/ /frontend/src
-COPY package.json /frontend/package.json
-
-RUN npm i
-
+FROM nginx
 EXPOSE 3000
-
-CMD ["npm", "start"]
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/build /usr/share/nginx/html
