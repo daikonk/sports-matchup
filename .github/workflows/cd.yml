@@ -5,7 +5,6 @@ on:
     workflows: [ "CI Pipeline" ]
     types:
       - completed
-    branches: [ "production" ]
     
 
 jobs:
