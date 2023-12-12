@@ -6,13 +6,14 @@ import axios from 'axios';
 import './App.css';
 import Image from 'react-bootstrap/Image';  // Import Image from react-bootstrap
 import profile_pic from './images/profile.png'
+import setEvents from './MyEvents.js'
 
 const Navbar = ({ logo, logoStyle }) => {
   const location = useLocation();
   const { token, userId } = useAuth();
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/sportevents/?user=${userId}`)
+    axios.get(`/api/sportevents/?user=${userId}`)
         .then(response => {
             setEvents(response.data);
         })
