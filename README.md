@@ -50,4 +50,13 @@ To delete all data from the a desired table in the datatable, perform the follow
 DELETE FROM public."SportEvent_sportevent";
 ```
 ___
+
+When using this branch with your own database and docker-compose up add the following DB_CREDS.env to the root of the project:
+```
+DB_NAME=mydb
+DB_USER=myuser
+DB_PASSWORD=password
+HOST_ENDPOINT=localhost
+DB_PORT=5432
+```
 **NOTE:** Replace "SportEvent_sportevent" with the specific table name
