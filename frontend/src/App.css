@@ -116,7 +116,32 @@ nav {
   font-family: Roboto;
 }
 
-.roboto-style{
+.roboto-style-navbar{
   font-family: Roboto;
   font-size: 17px;
+}
+
+.roboto {
+  font-family: Roboto;
+}
+
+.weight-title {
+  font-size: 45px;
+}
+
+.weight-text {
+  font-size: 28px
+}
+
+h1 {
+  font-family: Roboto;
+  font-size: 45px;
+}
+
+h2 {
+  font-family: Roboto;
+}
+
+h3 {
+  font-family: Roboto;
 }

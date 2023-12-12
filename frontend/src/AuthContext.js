@@ -1,20 +1,36 @@
 // AuthContext.js
-
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
+  // Load token from local storage on initial render
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
   const [user, setUser] = useState(null);
 
   const saveToken = (newToken) => {
-    console.log(`Auth context token: ${newToken}`);
+    // Save token to local storage and update state
+    localStorage.setItem('token', newToken);
     setToken(newToken);
   };
 
+  const [userId, setUserId] = useState(localStorage.getItem('user_id') || null);
+  const [userEmail, setUserEmail] = useState(localStorage.getItem('email') || null);
+
+  const saveUserId = (newUserId) => {
+    localStorage.setItem('user_id', newUserId);
+    setUserId(newUserId);
+  };
+
+  const saveUserEmail = (newUserEmail) => {
+    localStorage.setItem('email', newUserEmail);
+    setUserEmail(newUserEmail);
+  };
+
+
   const signOut = () => {
-    // Clear the token and user information
+    // Clear the token and user information from local storage and state
+    localStorage.removeItem('token');
     setToken(null);
     setUser(null);
 
@@ -32,6 +48,7 @@ export const AuthProvider = ({ children }) => {
 
       // Make a request to the server to get user details
       const response = await fetch('/api/api/user-details', {
+
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -56,7 +73,7 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   return (
-    <AuthContext.Provider value={{ token, saveToken, user, signOut }}>
+    <AuthContext.Provider value={{ token, saveToken, userId, saveUserId, userEmail, saveUserEmail, signOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -4,10 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { Modal, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 const Login = () => {
     const [error, setError] = useState(null);
-    const { token, saveToken } = useAuth();
+    const { token, saveToken, saveUserId } = useAuth();
     const [showErrorModal, setShowErrorModal] = useState(false);
     const navigate = useNavigate(); // Initialize useNavigate
 
@@ -21,37 +22,32 @@ const Login = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+    
         // Get form data...
         const formData = {
             username: event.target.username.value,
             password: event.target.password.value,
         };
-
+    
         try {
-            const response = await fetch('/api/api/loginuser/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
 
-            if (response.ok) {
-                const responseData = await response.json();
-                console.log('Response Data:', responseData);
-                saveToken(responseData.access_token);
-                navigate('/profile');
-            } else {
-                const errorData = await response.json();
-                console.error('Error:', errorData.error);
+            const response = await axios.post('/api/api/loginuser/', formData);
+    
+            console.log('Response Data:', response.data);
+            saveToken(response.data.access_token);
+            saveUserId(response.data.user_id);  // Save the user_id
+            navigate('/profile');
 
-                // Show error modal
-                setError(errorData.message);
-                handleShowErrorModal();
-            }
         } catch (error) {
             console.error('Error:', error.message);
+    
+            // Show error modal
+            if (error.response) {
+                setError(error.response.data.message);
+            } else {
+                setError(error.message);
+            }
+            handleShowErrorModal();
         }
     };
 

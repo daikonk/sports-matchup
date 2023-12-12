@@ -4,11 +4,12 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import "react-datetime/css/react-datetime.css";
 import Datetime from 'react-datetime';
-import moment from 'moment';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import basketballImage from './images/sports-basketball.png';
 import soccerImage from './images/sports-soccer.png';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 import axios from 'axios';
 import './App.css';
@@ -67,6 +68,8 @@ const CreateEdit = () => {
         { name: 'Wyoming', abbreviation: 'WY' }
     ];
 
+    const { token, signOut } = useAuth();
+
     const [eventName, setEventName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -84,6 +87,8 @@ const CreateEdit = () => {
     const [selectedSport, setSelectedSport] = useState('');
     const [sports, setSports] = useState(['Basketball', 'Baseball', 'Soccer', 'Football', 'Volleyball', 'Hockey', 'Golf', 'Tennis']);
     const [textAreaValue, setTextAreaValue] = useState('');
+
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const [showAddSport, setShowAddSport] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -110,7 +115,6 @@ const CreateEdit = () => {
         setTextAreaValue('');
         // Reset form fields here
     };
-
 
     const handleDateChange = (date) => {
         setDateTime(date);
@@ -160,7 +164,7 @@ const CreateEdit = () => {
         setTextAreaValue(event.target.value);
     };
 
-
+    const { userId } = useAuth();
 
     const handleSubmit = (event) => {
         // Prevent the default form submission
@@ -169,15 +173,10 @@ const CreateEdit = () => {
         if (textAreaValue.trim() === '') {
             finalTextAreaValue = 'N/A';
         }
-    
-        // Get the selected date-time from the Datetime component
-        // const date_time = document.getElementById('inputDateTime').value;
-    
-        // // Format the date-time into a string that Django can understand
-        // const formattedDatetime = moment(date_time).format('YYYY-MM-DDTHH:mm:ssZ');
-    
+        
         // Gather the data from the form fields
         const eventData = {
+            user: userId,
             sport: document.getElementById('sport').value,
             eventname: document.getElementById('eventName').value,
             members: document.getElementById('peopleCount').value,
@@ -192,6 +191,7 @@ const CreateEdit = () => {
             info: finalTextAreaValue,
             skill: expertiseLevel
         };
+        console.log(eventData);
     
         // Send a POST request to the Django server
         axios.post('/api/api/sportevents/', eventData)
@@ -209,6 +209,17 @@ const CreateEdit = () => {
     useEffect(() => {
         document.title = 'Create/Edit - Sports Matchup';
     }, []);
+
+    if (!token) {
+        console.log(`Navigating to login`)
+        return <Navigate to="/login" />;
+    }
+
+    const handleSignOut = () => {
+        // Call the signOut function to log the user out
+        signOut();
+        navigate('/profile');
+    };
 
     return (
         <main>
@@ -325,7 +336,7 @@ const CreateEdit = () => {
 
                         <div className="btn-toolbar justify-content-between mt-2">
                             <div className='btn-group'>
-                                <button type="button" className="btn btn-danger">Sign Out</button>
+                                <button type="button" className="btn btn-danger" onClick={handleSignOut}>Sign Out</button>
                             </div>
                             <div className="btn-group">
                                 <button type="submit" className="btn btn-primary">Save</button>

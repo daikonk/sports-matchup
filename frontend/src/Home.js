@@ -3,8 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import home_png from './images/home.png'
 import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 const Home = () => {
+    const { token } = useAuth();
     const location = useLocation();
     const [sortField, setSortField] = useState(null);
     const [sortDirection, setSortDirection] = useState('asc');
@@ -79,6 +82,11 @@ const Home = () => {
             return !selectedSport || event.sport === selectedSport;
         }
     });
+
+    if (!token) {
+        console.log(`Navigating to login`)
+        return <Navigate to="/login" />;
+        }
 
     return (
         <main>
