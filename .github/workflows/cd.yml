@@ -1,8 +1,8 @@
-name: Docker Image CD
+name: CD Pipeline
 
 on:
   workflow_run:
-    workflows: [ "Docker Image CI" ]
+    workflows: [ "CI Pipeline" ]
     types:
       - completed
     branches: [ "production" ]
