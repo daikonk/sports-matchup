@@ -2,10 +2,9 @@ name: CD Pipeline
 
 on:
   workflow_run:
-    workflows: [ "CI Pipeline" ]
+    workflows: [CI Pipeline]
     types:
       - completed
-    branches: [ "production" ]
     
 
 jobs:
