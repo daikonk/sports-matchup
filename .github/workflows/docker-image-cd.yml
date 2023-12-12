@@ -5,6 +5,7 @@ on:
     workflows: [ "Docker Image CI" ]
     types:
       - completed
+    branches: [ "production" ]
     
 
 jobs:
