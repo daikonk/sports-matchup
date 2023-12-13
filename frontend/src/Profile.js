@@ -107,7 +107,7 @@ const Profile = ({ setSelectedImage, selectedImage }) => {
                         profileData.append('profile_pic', fileInput.files[0]);
                     } else {
                         // If no new file is selected, fetch the current profile picture and include it in the update request
-                        axios.get(`http://localhost:8000/api/profiles/${id}/`)
+                        axios.get(`/api/api/profiles/${id}/`)
                             .then(response => {
                                 profileData.append('profile_pic', response.data.profile_pic);
                             })

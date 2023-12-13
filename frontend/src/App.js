@@ -12,6 +12,7 @@ import Profile from './Profile';
 import Login from './Login';
 import Register from './Register';
 import Footer from './Footer';
+import profile_pic from './images/profile.png'
 import { AuthProvider } from './AuthContext';
 
 const ScrollToTop = () => {
@@ -26,7 +27,7 @@ const ScrollToTop = () => {
 
 
 const App = () => {
-  const [selectedImage, setSelectedImage] = useState();
+  const [selectedImage, setSelectedImage] = useState(profile_pic);
 
   const logoStyle = {
     marginRight: '10px', // Adjust the margin as needed
