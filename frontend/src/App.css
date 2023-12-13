@@ -38,7 +38,7 @@
 }
 
 .bg-custom {
-  background-color: #2c2b48; /* Custom color */
+  background-color: #061c46; /* Custom color */
 }
 
 .custom-color {
@@ -144,4 +144,21 @@ h2 {
 
 h3 {
   font-family: Roboto;
+}
+
+.centered-button {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-modal-btns {
+  width: 80px;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-title {
+  font-family: roboto;
 }
