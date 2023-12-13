@@ -8,7 +8,7 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import axios from 'axios';
 
-const Profile = () => {
+const Profile = ({ setSelectedImage, selectedImage }) => {
     const { token, user, signOut } = useAuth();
     const { userEmail, userId } = useAuth()
     const skillLevels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
@@ -53,7 +53,7 @@ const Profile = () => {
         setSelectedSkill(event.target.value);
     };
 
-    const [selectedImage, setSelectedImage] = useState(profile_pic);
+    
     const handleImageClick = () => {
         document.getElementById('file-input').click();
     };
@@ -85,12 +85,12 @@ const Profile = () => {
             location: document.getElementById('location').value,
             email: document.getElementById('email').value,
             phone_num: document.getElementById('inputPhoneNumber').value,
-            profile_pic: document.getElementById('file-input').files[0]
+            profile_pic: document.getElementById('profile-picture-display').src,
         };
         console.log(profileData);
     
         // Get the UserProfile instance for the current user
-        axios.get(`http://localhost:8000/api/profiles/?user=${userId}`)
+        axios.get(`/api/api/profiles/?user=${userId}`)
             .then(response => {
                 // Check if a UserProfile instance exists for the current user
                 if (response.data.length > 0) {
@@ -98,7 +98,7 @@ const Profile = () => {
                     const id = response.data[0].user;
     
                     // Send a PUT request to the Django server to update the UserProfile instance
-                    axios.put(`http://localhost:8000/api/profiles/${id}/`, profileData, {
+                    axios.put(`/api/api/profiles/${id}/`, profileData, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
@@ -114,7 +114,7 @@ const Profile = () => {
                         // handleShowConfirmation();
                 } else {
                     // Send a POST request to the Django server to create a new UserProfile instance
-                    axios.post('http://localhost:8000/api/profiles/', profileData, {
+                    axios.post('/api/api/profiles/', profileData, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
@@ -145,7 +145,7 @@ const Profile = () => {
 
     useEffect(() => {
         // Fetch the current user's profile data from the server
-        axios.get(`http://localhost:8000/api/profiles/?user=${userId}`)
+        axios.get(`/api/api/profiles/?user=${userId}`)
             .then(response => {
                 if (response.data.length > 0) {
                     // Update the state with the fetched data

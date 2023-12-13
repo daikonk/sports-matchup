@@ -1,6 +1,6 @@
 
 // App.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from './images/sports.png';
@@ -23,7 +23,10 @@ const ScrollToTop = () => {
   return null;
 };
 
+
+
 const App = () => {
+  const [selectedImage, setSelectedImage] = useState();
 
   const logoStyle = {
     marginRight: '10px', // Adjust the margin as needed
@@ -39,7 +42,7 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <Navbar logo={logo} logoStyle={logoStyle} />
+        <Navbar logo={logo} logoStyle={logoStyle} selectedImage={selectedImage}/>
         <div>
           <div className="container" style={customStyles}>
             <ScrollToTop/>
@@ -48,7 +51,7 @@ const App = () => {
               <Route path="/home" element={<Home />} />
               <Route path="/create-edit-events" element={<CreateEdit />} />
               <Route path="/my-events" element={<MyEvents />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={<Profile selectedImage={selectedImage} setSelectedImage={setSelectedImage}/>} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Routes>

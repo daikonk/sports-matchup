@@ -8,7 +8,7 @@ import Image from 'react-bootstrap/Image';  // Import Image from react-bootstrap
 import profile_pic from './images/profile.png'
 import setEvents from './MyEvents.js'
 
-const Navbar = ({ logo, logoStyle }) => {
+const Navbar = ({ logo, logoStyle, selectedImage }) => {
   const location = useLocation();
   const { token, userId } = useAuth();
 
@@ -76,7 +76,7 @@ const Navbar = ({ logo, logoStyle }) => {
         </div>
         {token && 
           <div>
-            <Image src={profile_pic} roundedCircle style={{ width: '35px', height: '35px' }} />  {/* Add this line */}
+            <Image src={selectedImage} roundedCircle style={{ width: '35px', height: '35px' }} />  {/* Add this line */}
           </div>
         }
       </div>

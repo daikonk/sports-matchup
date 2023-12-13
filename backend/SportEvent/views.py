@@ -35,7 +35,7 @@ class UserProfileView(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 
-        # Handle the file upload
+        """
         if 'profile_pic' in request.FILES:
             file = request.FILES['profile_pic']
         else:
@@ -46,6 +46,7 @@ class UserProfileView(viewsets.ModelViewSet):
         user_profile = UserProfile.objects.get(id=serializer.data['id'])
         user_profile.profile_pic = file
         user_profile.save()
+        """
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
@@ -57,8 +58,8 @@ class UserProfileView(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
-
         # Handle the file upload
+        """
         if 'profile_pic' in request.FILES:
             file = request.FILES['profile_pic']
         else:
@@ -67,6 +68,8 @@ class UserProfileView(viewsets.ModelViewSet):
 
         # Save the file to the UserProfile instance
         instance.profile_pic = file
+        """
+        instance.profile_pic = format(serializer.data['profile_pic'])
         instance.save()
 
         if getattr(instance, '_prefetched_objects_cache', None):

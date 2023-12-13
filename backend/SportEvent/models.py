@@ -29,4 +29,4 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
     phone_num = models.CharField(max_length=200)
-    profile_pic = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    profile_pic = models.TextField()
