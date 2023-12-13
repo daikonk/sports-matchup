@@ -224,27 +224,15 @@ const CreateEdit = () => {
     return (
         <main>
             <section className='bg-light bg-text-light p-2'>
-                <h1 className="text-center mb-2"> Create Event</h1>
+                <h1 className="text-center mb-4"> Create Event</h1>
                 <div className = "container mb-3">
                     <form className="row g-3" id="input-form" onSubmit={handleSubmit}>
-                        <div className="container mb-3">
-                            <label for="eventName" className="form-label">Event Name:</label>
-                            <input type="text" className="form-control" id="eventName" placeholder="Enter the name of the event" value={eventName} onChange={e => setEventName(e.target.value)} required/>
-                        </div>
-                        <div className = "container mb-3">
+                        <div className="container mb-2">
                             <div className="row">
                                 <div className="col">
-                                    <label for="firstName" className="form-label">Full Name:</label>
-                                    <input type="text" className="form-control" id="firstName" placeholder="First name" value={firstName} onChange={e => setFirstName(e.target.value)} required/>
+                                    <label for="eventName" className="form-label">Event Name:</label>
+                                    <input type="text" className="form-control" id="eventName" placeholder="Enter the name of the event" value={eventName} onChange={e => setEventName(e.target.value)} required/>
                                 </div>
-                                <div className="col">
-                                    <label for="lastName" className="form-label"></label>
-                                    <input type="text" className="form-control" id="lastName" placeholder="Last name" value={lastName} onChange={e => setLastName(e.target.value)} required/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="container mb-3">
-                            <div className="row">
                                 <div className="col">
                                     <label for="inputSport" className="form-label">Sport:</label>
                                     <select className="form-control" id="sport" value={selectedSport} onChange={handleSportChange} required>
@@ -254,23 +242,19 @@ const CreateEdit = () => {
                                         ))}
                                         <option value="add-sport">Other...</option>
                                     </select>
-
-                                    <Modal show={showAddSport} onHide={handleCloseAddSport}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Add a Sport</Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-                                            <input type="text" className="form-control" placeholder="Enter sport name" onChange={handleNewSportChange} />
-                                        </Modal.Body>
-                                        <Modal.Footer>
-                                            <Button variant="secondary" onClick={handleCloseAddSport}>
-                                                Close
-                                            </Button>
-                                            <Button variant="primary" onClick={handleSaveChanges}>
-                                                Save Changes
-                                            </Button>
-                                        </Modal.Footer>
-                                    </Modal>
+                                </div>
+                            </div>
+                        
+                        </div>
+                        <div className = "container mb-2">
+                            <div className="row">
+                                <div className="col">
+                                    <label for="firstName" className="form-label">First Name:</label>
+                                    <input type="text" className="form-control" id="firstName" placeholder="First name" value={firstName} onChange={e => setFirstName(e.target.value)} required/>
+                                </div>
+                                <div className="col">
+                                    <label for="lastName" className="form-label">Last Name:</label>
+                                    <input type="text" className="form-control" id="lastName" placeholder="Last name" value={lastName} onChange={e => setLastName(e.target.value)} required/>
                                 </div>
                                 <div className="col">
                                     <label for="inputPhoneNumber" className="form-label">Phone Number:</label>
@@ -279,16 +263,20 @@ const CreateEdit = () => {
                             </div>
                         </div>
 
-                        <div className="container mb-3">
-                            <label for="inputAddress" className="form-label">Address or Venue Name:</label>
-                            <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St" value={inputAddress} onChange={e => setInputAddress(e.target.value)} required/>
-                        </div>
-                        <div className="container mb-3">
-                            <label for="inputAddress2" className="form-label">Address 2:</label>
-                            <input type="text" className="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"/>
+                        <div className="container mb-2">
+                            <div className="row">
+                                <div className='col'>
+                                    <label for="inputAddress" className="form-label">Address/Venue Name:</label>
+                                    <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St" value={inputAddress} onChange={e => setInputAddress(e.target.value)} required/>
+                                </div>
+                                <div className='col'>
+                                    <label for="inputAddress2" className="form-label">Address 2:</label>
+                                    <input type="text" className="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"/>
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="container mb-3">
+                        <div className="container mb-2">
                             <div className='row'>
                                 <div className="col">
                                     <label for="inputCity" className="form-label">City:</label>
@@ -309,7 +297,7 @@ const CreateEdit = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="container mb-3">
+                        <div className="container mb-2">
                             <div className="row">
                                 <div className="col">
                                     <label className="form-label">Date and Time:</label>
@@ -343,20 +331,37 @@ const CreateEdit = () => {
                                 <button type="reset" className="btn btn-secondary">Cancel</button>
                             </div>
                         </div>
-                        <Modal show={showConfirmation} onHide={handleCloseConfirmation}>
-                            <Modal.Header closeButton>
-                            <Modal.Title>Confirmation</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>Your event was created successfully!</Modal.Body>
-                            <Modal.Footer>
-                            <Button variant="primary" onClick={handleCloseConfirmation}>
-                                Done
-                            </Button>
-                            </Modal.Footer>
-                        </Modal>
                     </form>
                 </div>
             </section>
+
+            <Modal show={showConfirmation} onHide={handleCloseConfirmation}>
+                <Modal.Header closeButton>
+                <Modal.Title>Confirmation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Your event was created successfully!</Modal.Body>
+                <Modal.Footer>
+                <Button variant="primary" onClick={handleCloseConfirmation}>
+                    Done
+                </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal show={showAddSport} onHide={handleCloseAddSport}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add a Sport</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <input type="text" className="form-control" placeholder="Enter sport name" onChange={handleNewSportChange} />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseAddSport}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSaveChanges}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
         </main>
     );

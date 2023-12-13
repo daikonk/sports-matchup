@@ -18,7 +18,7 @@ const Profile = ({ setSelectedImage, selectedImage }) => {
     const [selectedSport, setSelectedSport] = useState('');
     const [sports, setSports] = useState(['Basketball', 'Baseball', 'Soccer', 'Football', 'Volleyball', 'Hockey', 'Golf', 'Tennis']);
     const [selectedSkill, setSelectedSkill] = useState('');
-    const [Phonevalue, PhonesetValue] = useState()
+    const [Phonevalue, PhonesetValue] = useState();
     const navigate = useNavigate(); // Initialize useNavigate
 
     const handleClose = () => setShow(false);
@@ -39,6 +39,10 @@ const Profile = ({ setSelectedImage, selectedImage }) => {
         }
     };
 
+    const handlePhoneChange = (event) => {
+        PhonesetValue(event.target.value);
+    }
+
     const handleNewSportChange = (event) => {
         setNewSport(event.target.value);
     };
@@ -51,7 +55,7 @@ const Profile = ({ setSelectedImage, selectedImage }) => {
 
     const handleSkillChange = (event) => {
         setSelectedSkill(event.target.value);
-    };
+    }
 
     
     const handleImageClick = () => {
@@ -96,6 +100,23 @@ const Profile = ({ setSelectedImage, selectedImage }) => {
                 if (response.data.length > 0) {
                     // Get the ID of the UserProfile instance
                     const id = response.data[0].user;
+
+                    // Append the file to the FormData instance, if a file has been selected
+                    const fileInput = document.getElementById('file-input');
+                    if (fileInput.files.length > 0) {
+                        profileData.append('profile_pic', fileInput.files[0]);
+                    } else {
+                        // If no new file is selected, fetch the current profile picture and include it in the update request
+                        axios.get(`http://localhost:8000/api/profiles/${id}/`)
+                            .then(response => {
+                                profileData.append('profile_pic', response.data.profile_pic);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                // Handle error here
+                            });
+                    }
+                    console.log(profileData)
     
                     // Send a PUT request to the Django server to update the UserProfile instance
                     axios.put(`/api/api/profiles/${id}/`, profileData, {
@@ -136,8 +157,6 @@ const Profile = ({ setSelectedImage, selectedImage }) => {
             });
     };
 
-    console.log(userId)
-
     useEffect(() => {
         document.title = 'Profile - Sports Matchup';
         console.log(`profile`);
@@ -148,23 +167,26 @@ const Profile = ({ setSelectedImage, selectedImage }) => {
         axios.get(`/api/api/profiles/?user=${userId}`)
             .then(response => {
                 if (response.data.length > 0) {
+                    var phone_num = response.data[0].phone_num;
+
                     // Update the state with the fetched data
                     const profile = response.data[0];
                     document.getElementById('name').value = profile.name;
                     document.getElementById('age').value = profile.age;
-                    document.getElementById('sport').value = profile.sport;
-                    document.getElementById('skill').value = profile.skill;
+                    setSelectedSport(profile.sport)
+                    setSelectedSkill(profile.skill)
                     document.getElementById('location').value = profile.location;
                     document.getElementById('email').value = profile.email;
-                    document.getElementById('inputPhoneNumber').value = profile.phone_num;
+                    PhonesetValue(phone_num);
                     setSelectedImage(profile.profile_pic);
                 }
+                console.log(phone_num)
             })
             .catch(error => {
                 console.error(error);
                 // Handle error here
             });
-    }, []);
+    }, [userId]);
 
     if (!token) {
         console.log(`Navigating to login`)
@@ -227,23 +249,6 @@ const Profile = ({ setSelectedImage, selectedImage }) => {
                                             ))}
                                             <option value="add-sport">+ Add new sport</option>
                                         </select>
-
-                                        <Modal show={show} onHide={handleClose}>
-                                            <Modal.Header closeButton>
-                                                <Modal.Title>Add a Sport</Modal.Title>
-                                            </Modal.Header>
-                                            <Modal.Body>
-                                                <input type="text" className="form-control" placeholder="Enter sport name" onChange={handleNewSportChange} required/>
-                                            </Modal.Body>
-                                            <Modal.Footer>
-                                                <Button variant="secondary" onClick={handleClose}>
-                                                    Close
-                                                </Button>
-                                                <Button variant="primary" onClick={handleSaveChanges}>
-                                                    Save Changes
-                                                </Button>
-                                            </Modal.Footer>
-                                        </Modal>
                                     </div>
                                 </div>
 
@@ -278,7 +283,7 @@ const Profile = ({ setSelectedImage, selectedImage }) => {
                                             id="email"
                                             placeholder="Enter your email"
                                             value={userEmail}
-                                            // readOnly
+                                            readOnly
                                         />
                                     </div>
                                 </div>
@@ -287,7 +292,7 @@ const Profile = ({ setSelectedImage, selectedImage }) => {
                                 <div className="form-group row mt-1">
                                     <label for="phone" className="col-sm-2 col-form-label">Phone #:</label>
                                     <div className="col-sm-10">
-                                        <PhoneInput placeholder="Enter phone number" defaultCountry="US" value={Phonevalue} onChange={PhonesetValue} id="inputPhoneNumber" required/>
+                                        <input type="text" className="form-control" id="inputPhoneNumber" placeholder="Enter phone number" value={Phonevalue} onChange={handlePhoneChange} required/>
                                     </div>
                                 </div>
 
@@ -297,26 +302,44 @@ const Profile = ({ setSelectedImage, selectedImage }) => {
                                         <button type="button" className="btn btn-danger" onClick={handleSignOut}>Sign Out</button>
                                     </div>
                                     <div className="btn-group">
-                                        <button type="submit" className="btn btn-primary">Save</button>
+                                        <button type="submit" className="btn btn-primary" onClick={handleShowConfirmation}>Save</button>
                                         <button type="reset" className="btn btn-secondary">Cancel</button>
                                     </div>
                                 </div>
-                                <Modal show={showConfirmation} onHide={handleCloseConfirmation}>
-                                    <Modal.Header closeButton>
-                                    <Modal.Title>Confirmation</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>Your profile was saved!</Modal.Body>
-                                    <Modal.Footer>
-                                    <Button variant="primary" onClick={handleCloseConfirmation}>
-                                        Done
-                                    </Button>
-                                    </Modal.Footer>
-                                </Modal>
                             </div>
                         </div>
                     </form>
                 </div>
             </section>
+            
+            <Modal show={showConfirmation} onHide={handleCloseConfirmation}>
+                <Modal.Header closeButton>
+                <Modal.Title>Confirmation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Your profile was saved!</Modal.Body>
+                <Modal.Footer>
+                <Button variant="primary" onClick={handleCloseConfirmation}>
+                    Done
+                </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add a Sport</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <input type="text" className="form-control" placeholder="Enter sport name" onChange={handleNewSportChange} required/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSaveChanges}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
         </main>
     );
