@@ -23,7 +23,7 @@ const Navbar = ({ logo, logoStyle }) => {
         .catch(error => {
             console.error('There was an error!', error);
         });
-}, []);
+}, [userId]);
 
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-custom fixed-top">
