@@ -14,6 +14,9 @@ jobs:
     runs-on: self-hosted
 
     steps:
+    - name: stop docker containers
+      run: docker-compose down
+
     - name: pull sm-frontend
       run: docker pull daikonk/sm-frontend:latest
 
@@ -24,5 +27,5 @@ jobs:
       run: docker pull daikonk/sm-worker:latest
 
     - name: docker compose up
-      run: docker-compose up
+      run: docker-compose up -d
     
