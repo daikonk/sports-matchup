@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const Login = () => {
     const [error, setError] = useState(null);
-    const { token, saveToken, saveUserId } = useAuth();
+    const { token, saveToken, saveUserId, saveUserEmail } = useAuth();
     const [showErrorModal, setShowErrorModal] = useState(false);
     const navigate = useNavigate(); // Initialize useNavigate
 
@@ -33,8 +33,10 @@ const Login = () => {
             const response = await axios.post('http://localhost:8000/loginuser/', formData);
     
             console.log('Response Data:', response.data);
+            console.log(response.data)
             saveToken(response.data.access_token);
             saveUserId(response.data.user_id);  // Save the user_id
+            saveUserEmail(response.data.email);
             navigate('/profile');
         } catch (error) {
             console.error('Error:', error.message);

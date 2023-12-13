@@ -61,13 +61,9 @@ class UserProfileView(viewsets.ModelViewSet):
         # Handle the file upload
         if 'profile_pic' in request.FILES:
             file = request.FILES['profile_pic']
-        else:
-            # Use the default profile picture if no new file is uploaded
-            file = File(open('profile.png', 'rb'))
-
-        # Save the file to the UserProfile instance
-        instance.profile_pic = file
-        instance.save()
+            # Save the file to the UserProfile instance
+            instance.profile_pic = file
+            instance.save()
 
         if getattr(instance, '_prefetched_objects_cache', None):
             # If 'prefetch_related' has been applied to a queryset, we need to
