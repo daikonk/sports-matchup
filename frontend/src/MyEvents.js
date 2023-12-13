@@ -134,7 +134,7 @@ const MyEvents = () => {
         event.preventDefault();
 
         // Make an API call to update the event
-        axios.put(`http://localhost:8000/api/sportevents/${currentEvent.id}/`, currentEvent)
+        axios.put(`/api/api/sportevents/${currentEvent.id}/`, currentEvent)
         .then(response => {
             // Handle successful update
             console.log('Event updated successfully');
