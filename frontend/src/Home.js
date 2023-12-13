@@ -5,6 +5,7 @@ import home_png from './images/home.png'
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
+import './App.css';
 
 const Home = () => {
     const { token } = useAuth();

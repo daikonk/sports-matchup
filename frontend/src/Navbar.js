@@ -10,16 +10,20 @@ import profile_pic from './images/profile.png'
 const Navbar = ({ logo, logoStyle }) => {
   const location = useLocation();
   const { token, userId } = useAuth();
+  const [profilePic, setProfilePic] = useState(profile_pic);  // Default to local profile 
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/sportevents/?user=${userId}`)
+    axios.get(`http://localhost:8000/api/profiles/?user=${userId}`)
         .then(response => {
-            setEvents(response.data);
+          console.log(response.data[0])
+            // Assuming the profile picture URL is stored in response.data.profile_pic
+            setProfilePic(response.data[0].profile_pic);
+            console.log(response.data[0])
         })
         .catch(error => {
             console.error('There was an error!', error);
         });
-  }, []);
+}, [userId]);
 
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-custom fixed-top">
@@ -75,7 +79,9 @@ const Navbar = ({ logo, logoStyle }) => {
         </div>
         {token && 
           <div>
-            <Image src={profile_pic} roundedCircle style={{ width: '35px', height: '35px' }} />  {/* Add this line */}
+            <NavLink to="/profile" className="nav-link" activeClassName="active">
+            <Image src={profilePic} roundedCircle style={{ width: '35px', height: '35px' }} />
+            </NavLink>
           </div>
         }
       </div>
